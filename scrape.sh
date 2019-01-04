@@ -4,7 +4,7 @@ INPUT_FILE=""
 STATE="++"
 DISTRICT_NAME="N/A"
 DISTRICT="+++"
-HTML_FOLDER="html"
+HTML_FOLDER="/data/html"
 mkdir -p ${HTML_FOLDER}
 
 function lookupDistrict () {
@@ -31,7 +31,7 @@ while getopts "d:s:f:" opt; do
 done
 
 function search () {
-  curl -s -d "Classification=+++&Submit=Submit&district=${DISTRICT}&firstname=&lastname=&lookup=&state=${STATE}" -X POST   http://locator.lcms.org/nworkers_frm/w_summary.asp  | egrep '<A HREF="w_detail.asp\?.*"' | egrep -oh '"w_detail.asp.*?"' | sed -e 's/"//g' | sed -e 's/w_detail.asp?//g'
+  curl -s -d "Classification=+++&Submit=Submit&district=${DISTRICT}&firstname=&lastname=&lookup=&state=${STATE}" -X POST   http://locator.lcms.org/nworkers_frm/w_summary.asp  | egrep '<A HREF="w_detail.asp\?.*"' | egrep -oh '"w_detail.asp.*?"' | sed -e 's/"//g' | sed -e 's/w_detail.asp?//g' | egrep -oh "W[0-9]+"
 }
 
 function getProfile() {
@@ -47,18 +47,18 @@ function getName() {
 
 getAddress() {
   # One line
-  cat html/${1}.html | sed -n -e '/<td><em>Address:/,/<\/span><\/td><\/tr>/ p' | sed -e 's/<br>//g' | egrep -v "<.*>" | egrep -oh "[A-Za-z0-9].*" | tr '\n' ', ' | sed 's/.\{2\}$//'
+  cat ${HTML_FOLDER}/${1}.html | sed -n -e '/<td><em>Address:/,/<\/span><\/td><\/tr>/ p' | sed -e 's/<br>//g' | egrep -v "<.*>" | egrep -oh "[A-Za-z0-9].*" | tr '\n' ', ' | sed 's/.\{2\}$//'
 
   # Multiple lines
-  #cat html/${1}.html | sed -n -e '/<td><em>Address:/,/<\/span><\/td><\/tr>/ p' | sed -e 's/<br>//g' | egrep -v "<.*>" | egrep -oh "[A-Za-z0-9].*"
+  #cat ${HTML_FOLDER}/${1}.html | sed -n -e '/<td><em>Address:/,/<\/span><\/td><\/tr>/ p' | sed -e 's/<br>//g' | egrep -v "<.*>" | egrep -oh "[A-Za-z0-9].*"
 }
 
 getEmail() {
-  cat html/${1}.html | egrep "mailto:" | tail -1 |egrep -oh ">.*<" | sed -e 's/<//g' | sed 's/>//g'
+  cat ${HTML_FOLDER}/${1}.html | egrep "mailto:" | tail -1 |egrep -oh ">.*<" | sed -e 's/<//g' | sed 's/>//g'
 }
 
 getPhone() {
-  cat html/${1}.html | sed -n -e '/<td><em>Phone:/,/<\/span>/ p' | sed -e 's/<br>//g' | egrep -v "<.*>" | egrep -oh "[()A-Za-z0-9].*"
+  cat ${HTML_FOLDER}/${1}.html | sed -n -e '/<td><em>Phone:/,/<\/span>/ p' | sed -e 's/<br>//g' | egrep -v "<.*>" | egrep -oh "[()A-Za-z0-9].*"
 }
 
 function scrape () {
