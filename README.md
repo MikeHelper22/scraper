@@ -16,12 +16,12 @@ To run for a single District:
 
 ```
 docker run -it -v $(pwd):/data denversocietyofcreation/scraper /bin/bash
-# ./scraper.sh -d "District Name"
+# ./scraper.sh -d "District Name" | tee /data/<filename>.csv
 ```
 
 To run for a single State:
 
 ```
 docker run -it -v $(pwd):/data denversocietyofcreation/scraper /bin/bash
-# ./scraper.sh -s "State Name"
+# ./scraper.sh -s "State Name" | tee /data/<filename>.csv
 ```
