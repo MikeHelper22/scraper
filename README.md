@@ -14,5 +14,6 @@ To run for a single District:
 # ./scraper.sh -d "District Name"```
 
 To run for a single State:
+
 ```docker run -it -v $(pwd):/data denversocietyofcreation/scraper /bin/bash
 # ./scraper.sh -s "State Name"```
