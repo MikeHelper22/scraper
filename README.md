@@ -10,8 +10,10 @@ To run from Windows:
 
 To run for a single District:
 
-```docker run -it -v $(pwd):/data denversocietyofcreation/scraper /bin/bash
-# ./scraper.sh -d "District Name"```
+```
+docker run -it -v $(pwd):/data denversocietyofcreation/scraper /bin/bash
+# ./scraper.sh -d "District Name"
+```
 
 To run for a single State:
 
