@@ -1,2 +1,2 @@
-build -t denversocietyofcreation/scraper .
-docker push denversocietyofcreation/scraper
+docker build -t denversocietyofcreation/scraper .
+docker push denversocietyofcreation/scraper:latest
